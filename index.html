@@ -1,30 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bitboy - Gameboy Emulator – Mobile App Landing Page (Dark Mode)</title>
+<title>Bitboy - Gameboy Emulator – Trang giới thiệu ứng dụng</title>
 
-<!-- Google Fonts -->
+<!-- Google Fonts (giữ nguyên) -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
- <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      try {
-        const result = window.AF_SMART_SCRIPT.generateOneLinkURL({
-          oneLinkURL: "https://gbaios.onelink.me/POR5/crrkp70n",
-          afParameters: {}
-        });
-        if (result && result.clickURL) {
-          // Redirect (ví dụ iOS/Android → Store)
-          setTimeout(() => {
-            window.location.href = result.clickURL;
-          }, 800);
-        }
-      } catch (e) {
-        console.error("AF Smart Script redirect error:", e);
+
+<!-- ========== AppsFlyer OneLink AUTO REDIRECT ========== -->
+<script src="https://onelinksmartscript.appsflyer.com/onelink-smart-script-latest.js"></script>
+<script>
+window.addEventListener("DOMContentLoaded", function() {
+  try {
+    const result = window.AF_SMART_SCRIPT.generateOneLinkURL({
+      oneLinkURL: "https://gbaios.onelink.me/POR5", // Base OneLink domain + PID
+      afParameters: {
+        mediaSource: { defaultValue: "metaweb_int" },
+        campaign: { keys: ["campaign", "utm_campaign"], defaultValue: "GBA_landing_campaign" },
+        adSet: { keys: ["adset", "utm_adset"] },
+        ad: { keys: ["ad", "utm_ad"] },
+        afSub1: { keys: ["fbclid", "utm_fbclid"] }
       }
     });
-  </script>
+
+    if(result && result.clickURL) {
+      // Gắn forward đến path gốc của OneLink bạn đã tạo
+      window.location.href = result.clickURL + "/crrkp70n";
+    }
+  } catch (e) {
+    console.error("[AppsFlyer Smart Script] Error:", e);
+  }
+});
+</script>
+<!-- ================================================== -->
+
 <style>
     :root {
         --primary: #6C63FF;
@@ -34,15 +44,12 @@
         --text: #E5E7EB;
         --radius: 20px;
     }
-
     body {
         margin: 0;
         background: var(--bg);
         color: var(--text);
         font-family: 'Inter', sans-serif;
     }
-
-    /* Hero */
     .hero {
         text-align: center;
         padding: 80px 24px 60px;
@@ -60,69 +67,19 @@
         font-size: 16px;
         margin-bottom: 28px;
     }
-    .hero img {
-        width: 260px;
-        border-radius: 30px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-        margin-bottom: 30px;
-    }
-    .btn {
-        background: var(--primary);
-        padding: 14px 30px;
-        color: white;
-        border-radius: 40px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: 0.25s;
-    }
-    .btn:hover {
-        background: var(--secondary);
-        transform: scale(1.07);
-    }
-
-    /* Sections */
-    .section {
-        padding: 50px 24px;
-        max-width: 900px;
-        margin: auto;
-    }
-    .section-title {
-        font-size: 26px;
-        font-family: 'Poppins';
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    /* Card */
     .card {
         background: var(--card);
         padding: 24px;
         border-radius: var(--radius);
         box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        transition: 0.25s;
     }
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    }
-
-    /* Features Grid */
     .features {
         display: grid;
         gap: 20px;
     }
-    .features img {
-        width: 80px;
-        border-radius: 16px;
-    }
     @media(min-width: 768px){
-        .features {
-            grid-template-columns: repeat(3, 1fr);
-        }
+        .features { grid-template-columns: repeat(3, 1fr); }
     }
-
-    /* Slider */
     .slider-container {
         display: flex;
         overflow-x: auto;
@@ -136,116 +93,35 @@
         scroll-snap-align: center;
         box-shadow: 0 6px 20px rgba(0,0,0,0.5);
     }
-
-    /* FAQ */
-    details {
-        background: var(--card);
-        padding: 20px;
-        border-radius: 16px;
-        margin-bottom: 16px;
-        cursor: pointer;
-    }
-    details summary {
-        font-weight: 600;
-        font-size: 18px;
-    }
-
-    /* CTA */
-    .cta {
-        text-align: center;
-        margin-top: 60px;
-        padding: 60px 24px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        border-radius: 30px 30px 0 0;
-    }
-    .cta a {
-        display: inline-block;
-        margin-top: 14px;
-        background: #111;
-        padding: 14px 28px;
-        border-radius: 40px;
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-    .cta a:hover {
-        transform: scale(1.1);
-        background: black;
-    }
-
     footer {
         text-align: center;
         padding: 24px;
         font-size: 14px;
         color: #888;
     }
-
 </style>
 </head>
 
 <body>
 
- <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      try {
-        const result = window.AF_SMART_SCRIPT.generateOneLinkURL({
-          oneLinkURL: "https://gbaios.onelink.me/POR5/crrkp70n",
-          afParameters: {}
-        });
-        if (result && result.clickURL) {
-          // Redirect (ví dụ iOS/Android → Store)
-          setTimeout(() => {
-            window.location.href = result.clickURL;
-          }, 800);
-        }
-      } catch (e) {
-        console.error("AF Smart Script redirect error:", e);
-      }
-    });
-  </script>
-
-<!-- HERO -->
+<!-- HERO UI — user sẽ không thấy vì redirect xảy ra ngay -->
 <section class="hero">
     <h1 class="hero-title">Bitboy - Gameboy Emulator App</h1>
-    <p class="hero-sub">A new way to enjoy wallpapers, charging effects, and widget customization</p>
-
+    <p class="hero-sub">Trải nghiệm hình nền 4K, hiệu ứng sạc pin và widget tùy chỉnh theo phong cách của bạn.</p>
     <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&w=900" alt="App Mockup">
-
-    <a href="#" class="btn">Download Now</a>
 </section>
 
-<!-- FEATURES -->
 <section class="section">
-    <h2 class="section-title">🔥 Powerful Features</h2>
-
+    <h2 class="section-title">🔥 Tính năng nổi bật</h2>
     <div class="features">
-
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1593642634443-44adaa06623a?auto=format&w=300">
-            <h3>Premium Wallpapers</h3>
-            <p>Explore thousands of 4K wallpapers, aesthetic themes, and daily-updated collections.</p>
-        </div>
-
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&w=300">
-            <h3>Charging Animations</h3>
-            <p>Beautiful charging effects that bring your screen to life every time you plug in.</p>
-        </div>
-
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&w=300">
-            <h3>Custom Widgets</h3>
-            <p>Stylish widgets for clock, battery, calendar, reminders, and more.</p>
-        </div>
-
+        <div class="card"><h3>Hình nền 4K</h3><p>Cập nhật mỗi ngày</p></div>
+        <div class="card"><h3>Hiệu ứng sạc pin</h3><p>Animation khi cắm sạc</p></div>
+        <div class="card"><h3>Widget cá nhân</h3><p>Đồng hồ, pin, lịch…</p></div>
     </div>
 </section>
 
-<!-- WALLPAPER SLIDER -->
 <section class="section">
-    <h2 class="section-title">📸 Wallpaper Showcase</h2>
-
+    <h2 class="section-title">📸 Bộ sưu tập hình nền</h2>
     <div class="slider-container">
         <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&w=600">
         <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&w=600">
@@ -253,57 +129,7 @@
     </div>
 </section>
 
-<!-- CHARGING EFFECTS -->
-<section class="section">
-    <h2 class="section-title">⚡ Charging Effects</h2>
-
-    <div class="slider-container">
-        <img src="https://images.unsplash.com/photo-1633265486064-086b21992362?auto=format&w=600">
-        <img src="https://images.unsplash.com/photo-1611262588024-d12430b30f97?auto=format&w=600">
-    </div>
-</section>
-
-<!-- WIDGET SHOWCASE -->
-<section class="section">
-    <h2 class="section-title">📅 Widget Collection</h2>
-
-    <div class="slider-container">
-        <img src="https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?auto=format&w=600">
-        <img src="https://images.unsplash.com/photo-1581291519195-ef11498d1cf5?auto=format&w=600">
-    </div>
-</section>
-
-<!-- FAQ -->
-<section class="section">
-    <h2 class="section-title">❓ Frequently Asked Questions</h2>
-
-    <details>
-        <summary>Is the app free to use?</summary>
-        <p>Yes — you can use the free version, and upgrade to premium to unlock all content.</p>
-    </details>
-
-    <details>
-        <summary>Does Bitboy - Gameboy Emulator support iPhone?</summary>
-        <p>Absolutely. Bitboy - Gameboy Emulator works perfectly on iOS 15 and above.</p>
-    </details>
-
-    <details>
-        <summary>Are wallpapers updated daily?</summary>
-        <p>Yes! New wallpapers and themes are added every day.</p>
-    </details>
-
-</section>
-
-<!-- CTA -->
-<section class="cta">
-    <h2>✨ Ready to Personalize Your Phone?</h2>
-    <p>Download Bitboy - Gameboy Emulator and start customizing now!</p>
-    <a href="#">Get Bitboy - Gameboy Emulator</a>
-</section>
-
-<footer>
-    © 2025 Bitboy - Gameboy Emulator App. All rights reserved.
-</footer>
+<footer>© 2025 Bitboy - Gameboy Emulator. Đã đăng ký bản quyền.</footer>
 
 </body>
 </html>
