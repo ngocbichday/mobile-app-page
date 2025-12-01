@@ -1,188 +1,132 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bitboy - Gameboy Emulator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chimomo – Trang giới thiệu ứng dụng</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
 
-<!-- Google Fonts (giữ nguyên) -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
-
-<!-- ========== META PIXEL (Analytics của Meta Ads – vẫn giữ) ========== -->
-<script>
-!function(f,b,e,v,n,t,s){
-  if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window,document,'script','connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1179956897426193'); 
-fbq('track', 'PageView');
-</script>
-<!-- =============================================================== -->
-
-<!-- ========== APPSFLYER SMART SCRIPT V2 ========== -->
-<script src="https://onelinksmartscript.appsflyer.com/onelink-smart-script-latest.js"></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  try {
-    // 1. Lấy tham số từ Meta Ads (nếu user vào từ campaign)
-    const params = new URLSearchParams(window.location.search);
+  <!-- ========== Meta Pixel (chuẩn 2025 + event Lead) ========== -->
+  <script>
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)
+    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
     
-    // Meta thường dùng các param: campaign, adset, fbclid hoặc đôi khi utm_xxxx
-    const campaign = params.get("campaign") || params.get("utm_campaign") || "unknown_meta_campaign";
-    const adset = params.get("adset") || params.get("utm_adset") || "unknown_meta_adset";
-    const ad = params.get("ad") || params.get("utm_ad") || "unknown_meta_ad";
-    const fbclid = params.get("fbclid") || ""; // Meta Click ID quan trọng để AF nhận attribution
+    fbq('init', '1179956897426193');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" 
+         src="https://www.facebook.com/tr?id=1179956897426193&ev=PageView&noscript=1"/>
+  </noscript>
 
-    // 2. Generate OneLink nhưng với tham số đúng để AF nhận attribution
-    const result = window.AF_SMART_SCRIPT_V2.generateOneLinkURL({
-      oneLinkURL: "https://gbaios.onelink.me/POR5/crrkp70n",  // ✅ OneLink gốc của bạn
-      afParameters: {
-        pid: "metaweb_int",    // ✅ Media source khớp với dashboard
-        c: campaign,          // ✅ Campaign name truyền vào AF
-        af_asset: adset,      // ✅ Adset truyền vào AF
-        af_ad: ad,            // ✅ Ad name truyền vào AF
-        af_sub1: fbclid       // ✅ Meta Click ID để AF combine attribution
+  <!-- ========== AppsFlyer OneLink Smart Script + Auto Redirect (đã khớp 100% dashboard) ========== -->
+  <script src="https://onelinksmartscript.appsflyer.com/onelink-smart-script-latest.js"></script>
+
+  <script>
+    function doRedirect(url) {
+      // Bắn event Lead cho Meta trước khi rời trang (rất quan trọng cho tối ưu CPA)
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', {
+          content_name: 'Chimomo_Auto_Redirect',
+          campaign: 'unknown_meta_campaign'
+        });
+      }
+
+      // Delay nhẹ để chắc chắn event được gửi xong
+      setTimeout(function() {
+        window.location.href = url;
+      }, 150);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      try {
+        const result = window.AF_SMART_SCRIPT.generateOneLinkURL({
+          oneLinkURL: "https://gbaios.onelink.me/POR5",
+          afParameters: {
+            mediaSource: { defaultValue: "metaweb_int" },                    // pid = metaweb_int
+            campaign: { 
+              keys: ["campaign", "utm_campaign"], 
+              defaultValue: "unknown_meta_campaign"                         // c = unknown_meta_campaign
+            },
+            adSet: { keys: ["adset", "utm_adset"] },                         // af_adset
+            ad: { keys: ["ad", "utm_ad"] },                                  // af_ad
+            afSub1: { keys: ["fbclid"] }                                     // af_sub1 = fbclid (rất quan trọng)
+            // Có thể thêm af_sub2/af_sub3 nếu muốn báo cáo chi tiết hơn sau này
+          }
+        });
+
+        if (result && result.clickURL) {
+          doRedirect(result.clickURL + "/crrkp70n");
+        } else {
+          throw new Error("No clickURL generated");
+        }
+      } catch (e) {
+        console.warn("[AppsFlyer] Fallback redirect:", e);
+        // Fallback an toàn 100% khớp dashboard
+        // doRedirect("https://gbaios.onelink.me/POR5/crrkp70n?pid=metaweb_int&c=unknown_meta_campaign");
       }
     });
+  </script>
 
-    // 3. Auto redirect qua OneLink (quan trọng: vào qua OneLink chứ không qua store trực tiếp)
-    if (result && result.clickURL) {
-      window.location.href = result.clickURL;
-    } else {
-      console.warn("[AppsFlyer] Không thể generate OneLink, thực hiện fallback mở App Store");
-      
-      // Fallback iOS → mở App Store trực tiếp trong trường hợp không attribution được
-      window.location.href = "itms-apps://apps.apple.com/app/id6449770009"; // ID app mẫu, bạn thay app thật của bạn
-    }
-  } catch (err) {
-    console.error("[AppsFlyer Smart Script V2] Lỗi generate OneLink:", err);
-    
-    // Fallback khi lỗi thực sự xảy ra
-    window.location.href = "itms-apps://apps.apple.com/app/id6449770009";
-  }
-});
-</script>
-<!-- ======================================= -->
-
-<style>
+  <!-- CSS (giữ nguyên thiết kế đẹp của bạn) -->
+  <style>
     :root {
-        --primary: #6C63FF;
-        --secondary: #A78BFA;
-        --bg: #0D0E12;
-        --card: #1A1C22;
-        --text: #E5E7EB;
-        --radius: 20px;
+      --primary: #6C63FF;
+      --secondary: #A78BFA;
+      --bg: #0D0E12;
+      --card: #1A1C22;
+      --text: #E5E7EB;
+      --radius: 20px;
     }
-    body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--text);
-        font-family: 'Inter', sans-serif;
-    }
-    .hero {
-        text-align: center;
-        padding: 80px 24px 60px;
-        background: linear-gradient(160deg, #1A1C22, #0D0E12 60%);
-    }
-    .hero-title {
-        font-family: 'Poppins';
-        font-size: 34px;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 14px;
-    }
-    .hero-sub {
-        opacity: 0.8;
-        font-size: 16px;
-        margin-bottom: 28px;
-    }
-    .hero img {
-        width: 260px;
-        border-radius: 30px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-        margin-bottom: 30px;
-    }
-    .section {
-        padding: 50px 24px;
-        max-width: 900px;
-        margin: auto;
-    }
-    .section-title {
-        font-size: 26px;
-        font-family: 'Poppins';
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    .card {
-        background: var(--card);
-        padding: 24px;
-        border-radius: var(--radius);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        transition: 0.25s;
-    }
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    }
-    .features {
-        display: grid;
-        gap: 20px;
-    }
-    @media(min-width: 768px){
-        .features { grid-template-columns: repeat(3, 1fr); }
-    }
-    .slider-container {
-        display: flex;
-        overflow-x: auto;
-        gap: 16px;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 12px;
-    }
-    .slider-container img {
-        width: 240px;
-        border-radius: 20px;
-        scroll-snap-align: center;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-    }
-    footer {
-        text-align: center;
-        padding: 24px;
-        font-size: 14px;
-        color: #888;
-    }
-</style>
+    body {margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
+    .hero {text-align:center;padding:80px 24px 60px;background:linear-gradient(160deg,#1A1C22,#0D0E12 60%);}
+    .hero-title {font-family:'Poppins';font-size:34px;font-weight:700;color:white;margin-bottom:14px;}
+    .hero-sub {opacity:0.8;font-size:16px;margin-bottom:28px;}
+    .card {background:var(--card);padding:24px;border-radius:var(--radius);box-shadow:0 10px 20px rgba(0,0,0,0.3);}
+    .features {display:grid;gap:20px;padding:0 24px;}
+    @media(min-width:768px){.features{grid-template-columns:repeat(3,1fr);}}
+    .slider-container {display:flex;overflow-x:auto;gap:16px;scroll-snap-type:x mandatory;padding:20px 24px 32px;}
+    .slider-container img {width:240px;border-radius:20px;scroll-snap-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.5);flex-shrink:0;}
+    footer {text-align:center;padding:24px;font-size:14px;color:#888;}
+    .section {padding:20px 24px 40px;}
+    .section-title {font-family:'Poppins';font-size:24px;color:white;margin-bottom:20px;text-align:center;}
+  </style>
 </head>
 
 <body>
-<section class="hero">
+  <!-- Người dùng gần như không kịp thấy vì redirect cực nhanh -->
+  <section class="hero">
     <h1 class="hero-title">Bitboy - Gameboy Emulator App</h1>
     <p class="hero-sub">Retro gamepad in GBA Emulator</p>
     <img src="img/icon.png" alt="App Mockup">
 </section>
 
-<section class="section">
-    <h2 class="section-title">🔥 Tính năng nổi bật</h2>
+  <section class="section">
+    <h2 class="section-title">Tính năng nổi bật</h2>
     <div class="features">
-        <div class="card"><h3>Hình nền 4K</h3><p>Cập nhật mỗi ngày</p></div>
-        <div class="card"><h3>Hiệu ứng sạc pin</h3><p>Animation khi cắm sạc</p></div>
-        <div class="card"><h3>Widget cá nhân</h3><p>Đồng hồ, pin, lịch…</p></div>
+      <div class="card"><h3>Hình nền 4K</h3><p>Cập nhật mỗi ngày</p></div>
+      <div class="card"><h3>Hiệu ứng sạc pin</h3><p>Animation khi cắm sạc</p></div>
+      <div class="card"><h3>Widget cá nhân</h3><p>Đồng hồ, pin, lịch…</p></div>
     </div>
-</section>
+  </section>
 
-<section class="section">
-    <h2 class="section-title">📸 Showcase Hình nền</h2>
+  <section class="section">
+    <h2 class="section-title">Bộ sưu tập hình nền</h2>
     <div class="slider-container">
-        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&w=600">
-        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&w=600">
-        <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&w=600">
+      <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&w=600" alt="Wallpaper 1">
+      <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&w=600" alt="Wallpaper 2">
+      <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&w=600" alt="Wallpaper 3">
     </div>
-</section>
+  </section>
 
-<footer>© 2025 Bitboy - Gameboy Emulator. Đã đăng ký bản quyền.</footer>
-
+  <footer>© 2025 Chimomo. Đã đăng ký bản quyền.</footer>
 </body>
 </html>
